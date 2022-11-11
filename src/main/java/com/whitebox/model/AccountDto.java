@@ -1,14 +1,16 @@
 package com.whitebox.model;
 
-import lombok.Data;
-import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
+import lombok.*;
 
 import java.math.BigDecimal;
 
 @Data
-@RequiredArgsConstructor
+@AllArgsConstructor
+@Builder
 public class AccountDto {
+
+
+    private String id;
 
     @NonNull
     private String holderName;

@@ -15,7 +15,7 @@ import java.math.BigDecimal;
 public class AccountAggregate {
 
     @AggregateIdentifier
-    private String accountId;
+    private String id;
     private String holderName;
     private BigDecimal balance;
 
@@ -35,7 +35,7 @@ public class AccountAggregate {
     @EventHandler
     public void on(AccountCreatedEvent accountCreatedEvent ) {
         System.out.println("Aggregate:EventHandler");
-        this.accountId = accountCreatedEvent.getId();
+        this.id = accountCreatedEvent.getId();
         this.balance = accountCreatedEvent.getBalance();
         this.holderName = accountCreatedEvent.getHolderName();
     }
