@@ -2,12 +2,14 @@ package com.whitebox.query.controller;
 
 
 import com.whitebox.model.AccountDto;
-import com.whitebox.query.queries.GetAccountByIdQuery;
-import com.whitebox.query.queries.GetAccountQuery;
+import com.whitebox.model.TransactionDto;
+import com.whitebox.model.TransactionFilterRequest;
+import com.whitebox.query.queries.*;
 import org.axonframework.messaging.responsetypes.ResponseTypes;
 import org.axonframework.queryhandling.QueryGateway;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.math.BigDecimal;
@@ -36,5 +38,30 @@ class AccountQueryController {
         getAccountByIdQuery.setId(id);
         AccountDto accountDto = queryGateway.query(getAccountByIdQuery, ResponseTypes.instanceOf(AccountDto.class)).join();
         return accountDto.getBalance();
+    }
+
+    @GetMapping("/transactions")
+    public List<TransactionDto> listAllTransaction() {
+        GetTransactionQuery getTransactionQuery = new GetTransactionQuery();
+        List<TransactionDto> transactionDtos = queryGateway.query(getTransactionQuery, ResponseTypes.multipleInstancesOf(TransactionDto.class)).join();
+        return transactionDtos;
+    }
+
+    @GetMapping("/transactionsbydate")
+    public List<TransactionDto> getTransactionByAccountAndDate(@RequestBody TransactionFilterRequest transactionFilterRequest) {
+        GetTransactionFilterQuery getTransactionFilterQuery = new GetTransactionFilterQuery();
+        getTransactionFilterQuery.setAccountId(transactionFilterRequest.getAccountId());
+        getTransactionFilterQuery.setDateFrom(transactionFilterRequest.getDateFrom());
+        System.out.println("transactionFilterRequest.getDateFrom:"+transactionFilterRequest.getDateFrom());
+        System.out.println("getTransactionFilterQuery.getDateFrom:"+getTransactionFilterQuery.getDateFrom());
+        List<TransactionDto> transactionDtos = queryGateway.query(getTransactionFilterQuery, ResponseTypes.multipleInstancesOf(TransactionDto.class)).join();
+        return transactionDtos;
+    }
+
+    @GetMapping("/redlistaccounts")
+    public List<AccountDto> getRedListAccounts() {
+        GetRedListAccountsQuery getRedListAccountQuery = new GetRedListAccountsQuery();
+        List<AccountDto> accountDtos = queryGateway.query(getRedListAccountQuery, ResponseTypes.multipleInstancesOf(AccountDto.class)).join();
+        return accountDtos;
     }
 }

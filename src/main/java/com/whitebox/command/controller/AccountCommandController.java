@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Date;
 import java.util.UUID;
 
 @RestController
@@ -42,6 +43,7 @@ public class AccountCommandController {
                 .accountId(transaction.getAccountId())
                 .amount(transaction.getAmount())
                 .transactionType(transaction.getTransactionType())
+                .transactionDate(new Date())
                 .build();
         String result = commandGateway.sendAndWait(transactionCommand);
         return result;

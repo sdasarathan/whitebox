@@ -30,13 +30,14 @@ public class TransactionCreatedEventHandler {
 
     @EventHandler
     public void on(TransactionCreatedEvent transactionCreatedEvent) throws Exception {
-        System.out.println("AccountEventHandler:EventHandler");
+        System.out.println("TransactionEventHandler:EventHandler");
         Transaction transaction = new Transaction();
         BeanUtils.copyProperties(transactionCreatedEvent, transaction);
-        System.out.println("Id>"+transactionCreatedEvent.getId());
-        System.out.println("Transaction Type>"+transactionCreatedEvent.getTransactionType());
-        System.out.println("Amount >"+transactionCreatedEvent.getAmount());
-        System.out.println("Account ID>"+transactionCreatedEvent.getAccountId());
+        System.out.println("Id>"+transaction.getId());
+        System.out.println("Transaction Type>"+transaction.getTransactionType());
+        System.out.println("Amount >"+transaction.getAmount());
+        System.out.println("Account ID>"+transaction.getAccountId());
+        System.out.println("Transaction Date>"+transaction.getTransactionDate());
         Account account = accountRepository.findById(transactionCreatedEvent.getAccountId()).get();
         BigDecimal currentBalance = account.getBalance();
         BigDecimal newBalance = null;

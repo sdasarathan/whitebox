@@ -27,7 +27,7 @@ public class AccountEventHandler {
         System.out.println("HolderName>"+accountCreatedEvent.getHolderName());
         System.out.println("Balance>"+accountCreatedEvent.getBalance());
         accountRepository.save(account);
-        throw new Exception("Testing exception");
+//        throw new Exception("Testing exception");
     }
 
     @ExceptionHandler

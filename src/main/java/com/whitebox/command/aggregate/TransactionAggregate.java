@@ -12,6 +12,7 @@ import org.axonframework.spring.stereotype.Aggregate;
 import org.springframework.beans.BeanUtils;
 
 import java.math.BigDecimal;
+import java.util.Date;
 
 @Aggregate
 public class TransactionAggregate {
@@ -20,6 +21,8 @@ public class TransactionAggregate {
     private String id;
     private TransactionType transactionType;
     private BigDecimal amount;
+
+    private Date transactionDate;
 
 
     public TransactionAggregate() {
@@ -41,5 +44,6 @@ public class TransactionAggregate {
         this.id = transactionCreatedEvent.getId();
         this.transactionType = transactionCreatedEvent.getTransactionType();
         this.amount = transactionCreatedEvent.getAmount();
+        this.transactionDate = transactionCreatedEvent.getTransactionDate();
     }
 }
