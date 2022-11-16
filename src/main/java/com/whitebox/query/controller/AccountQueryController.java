@@ -16,7 +16,7 @@ import java.math.BigDecimal;
 import java.util.List;
 
 @org.springframework.web.bind.annotation.RestController
-@RequestMapping("/rest")
+@RequestMapping("/")
 class AccountQueryController {
 
     private QueryGateway queryGateway;

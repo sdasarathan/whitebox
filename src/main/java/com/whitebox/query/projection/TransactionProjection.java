@@ -33,6 +33,7 @@ public class TransactionProjection {
                         .accountId(transaction.getAccountId())
                         .amount(transaction.getAmount())
                         .transactionDate(transaction.getTransactionDate())
+                        .transactionType(transaction.getTransactionType())
                         .build())
                         .collect(Collectors.toList());
         return transactionDtos;

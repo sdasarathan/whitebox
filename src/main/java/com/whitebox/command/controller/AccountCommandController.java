@@ -14,7 +14,7 @@ import java.util.Date;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/accounts")
+@RequestMapping("/")
 public class AccountCommandController {
 
     public AccountCommandController(CommandGateway commandGateway) {
@@ -23,7 +23,7 @@ public class AccountCommandController {
 
     private CommandGateway commandGateway;
 
-    @PostMapping("/create")
+    @PostMapping("/account")
     public String createAccount(@RequestBody AccountDto account){
         System.out.println("In AccountCommandController:createAccount");
         CreateAccountCommand createAccountCommand = CreateAccountCommand.builder()

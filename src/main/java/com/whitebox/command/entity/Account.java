@@ -12,7 +12,6 @@ import java.math.BigDecimal;
 public class Account {
 
     @Id
-//    @GeneratedValue
     private String id;
     private String holderName;
     private BigDecimal balance;
