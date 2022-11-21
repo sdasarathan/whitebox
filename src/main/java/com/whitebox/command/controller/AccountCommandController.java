@@ -1,10 +1,13 @@
 package com.whitebox.command.controller;
 
+import com.whitebox.command.aggregate.AccountAggregate;
 import com.whitebox.command.commands.CreateAccountCommand;
 import com.whitebox.command.commands.CreateTransactionCommand;
 import com.whitebox.command.entity.Transaction;
 import com.whitebox.model.AccountDto;
 import org.axonframework.commandhandling.gateway.CommandGateway;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,6 +20,7 @@ import java.util.UUID;
 @RequestMapping("/")
 public class AccountCommandController {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(AccountCommandController.class);
     public AccountCommandController(CommandGateway commandGateway) {
         this.commandGateway = commandGateway;
     }
@@ -25,7 +29,7 @@ public class AccountCommandController {
 
     @PostMapping("/account")
     public String createAccount(@RequestBody AccountDto account){
-        System.out.println("In AccountCommandController:createAccount");
+        LOGGER.debug("In AccountCommandController:createAccount");
         CreateAccountCommand createAccountCommand = CreateAccountCommand.builder()
                 .id(UUID.randomUUID().toString())
                 .holderName(account.getHolderName())
@@ -37,7 +41,7 @@ public class AccountCommandController {
 
     @PostMapping("/transaction")
     public String transaction(@RequestBody Transaction transaction){
-        System.out.println("In AccountCommandController:createAccount");
+        LOGGER.debug("In AccountCommandController:createAccount");
         CreateTransactionCommand transactionCommand = CreateTransactionCommand.builder()
                 .id(UUID.randomUUID().toString())
                 .accountId(transaction.getAccountId())

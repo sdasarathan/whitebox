@@ -23,7 +23,6 @@ public class TransactionFilterProjection {
     @QueryHandler
     public List<TransactionDto> getHandler(GetTransactionFilterQuery getTransactionFilterQuery){
         List<Transaction> transactions = transactionRepository.findAllByAccountId(getTransactionFilterQuery.getAccountId());
-        System.out.println("getTransactionFilterQuery.getAccountId()"+getTransactionFilterQuery.getAccountId());
         List<TransactionDto> transactionDtos = transactions.stream().map(transaction -> TransactionDto
                 .builder()
                         .id(transaction.getId())

@@ -52,8 +52,6 @@ class AccountQueryController {
         GetTransactionFilterQuery getTransactionFilterQuery = new GetTransactionFilterQuery();
         getTransactionFilterQuery.setAccountId(transactionFilterRequest.getAccountId());
         getTransactionFilterQuery.setDateFrom(transactionFilterRequest.getDateFrom());
-        System.out.println("transactionFilterRequest.getDateFrom:"+transactionFilterRequest.getDateFrom());
-        System.out.println("getTransactionFilterQuery.getDateFrom:"+getTransactionFilterQuery.getDateFrom());
         List<TransactionDto> transactionDtos = queryGateway.query(getTransactionFilterQuery, ResponseTypes.multipleInstancesOf(TransactionDto.class)).join();
         return transactionDtos;
     }

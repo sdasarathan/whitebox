@@ -1,5 +1,6 @@
 package com.whitebox.command.events;
 
+import com.whitebox.command.controller.AccountCommandController;
 import com.whitebox.command.entity.Account;
 import com.whitebox.command.entity.Transaction;
 import com.whitebox.command.repository.AccountRepository;
@@ -8,6 +9,8 @@ import com.whitebox.model.TransactionType;
 import org.axonframework.config.ProcessingGroup;
 import org.axonframework.eventhandling.EventHandler;
 import org.axonframework.messaging.interceptors.ExceptionHandler;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -18,26 +21,19 @@ import java.math.BigDecimal;
 @ProcessingGroup("transaction")
 public class TransactionCreatedEventHandler {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(AccountCommandController.class);
+
     @Autowired
     private TransactionRepository transactionRepository;
 
     @Autowired
     private AccountRepository accountRepository;
 
-//    public TransactionCreatedEventHandler(AccountRepository accountRepository) {
-//        this.transactionRepository = transactionRepository;
-//    }
-
     @EventHandler
     public void on(TransactionCreatedEvent transactionCreatedEvent) throws Exception {
-        System.out.println("TransactionEventHandler:EventHandler");
+        LOGGER.debug("TransactionEventHandler:EventHandler");
         Transaction transaction = new Transaction();
         BeanUtils.copyProperties(transactionCreatedEvent, transaction);
-        System.out.println("Id>"+transaction.getId());
-        System.out.println("Transaction Type>"+transaction.getTransactionType());
-        System.out.println("Amount >"+transaction.getAmount());
-        System.out.println("Account ID>"+transaction.getAccountId());
-        System.out.println("Transaction Date>"+transaction.getTransactionDate());
         Account account = accountRepository.findById(transactionCreatedEvent.getAccountId()).get();
         BigDecimal currentBalance = account.getBalance();
         BigDecimal newBalance = null;
